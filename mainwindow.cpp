@@ -20,22 +20,28 @@ MainWindow::~MainWindow()
 void MainWindow::on_capsUncaps_clicked()
 {
     QString textFromTextBox;
-    int counterLower = 0;
+    int counterLower = 0, counterUpper = 0, spacCounter = 0;
 
     textFromTextBox = ui->textEdit->toPlainText();
 
     for(int i = 0; i < textFromTextBox.size(); i++){
-        if(textFromTextBox[i].isLower()){
-            counterLower++;
+        if(textFromTextBox[i] != ' '){
+            if(textFromTextBox[i].isLower()){
+                counterLower++;
+            }
+            else{counterUpper++;}
         }
+        else{spacCounter++;}
     }
 
-    if(counterLower >= textFromTextBox.size()){
+    if(counterLower >= textFromTextBox.size() - spacCounter){
         textFromTextBox = textFromTextBox.toUpper();
     }
-    else{
-       textFromTextBox = textFromTextBox.toLower();
+    else if(counterUpper >= textFromTextBox.size() - spacCounter){
+        textFromTextBox = textFromTextBox.toLower();
     }
+
+    qDebug() << textFromTextBox;
 
     ui->textEdit->setText(textFromTextBox);
 }
